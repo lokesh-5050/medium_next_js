@@ -1,0 +1,59 @@
+/* trending section starts */
+.trending_section{
+    padding: 5vh 8vmax;
+    width: 100%;
+    border-bottom: 1px solid black;
+
+}
+.trending_section>.title{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+.trending_section>.title>h5{
+    font-weight: 500;
+}
+/* trending cards start */
+.trending_cards_grid{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 45px;
+
+}
+.trending_card{
+    width: 25vmax;
+    display: flex;
+    justify-content: start;
+    gap: 25px;
+    align-items: start;
+    
+    
+}
+.trending_card>h3{
+    font-size: 2vmax;
+    color: grey;
+}
+.items{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+.trending_card>.items>.title{
+    display: flex;
+    
+    gap: 10px;
+}
+.tr_heading{
+    width: 24vmax;
+}
+.tr_heading>h4{
+    font-weight: 600;
+}
+.card_info>h5{
+    font-size: 0.8vmax;
+    color: grey;
+
+}
+
