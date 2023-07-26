@@ -1,0 +1,71 @@
+.post_card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lef>.owner_name{
+    display: flex;
+    gap: 10px;
+}
+.lef>.title>h4{
+    width: 35vmax;
+    margin-top: 5px;
+    font-size: 1.2vmax;
+    font-weight: 700;
+    height: 30px;
+    text-overflow: ellipsis;
+    overflow-y: hidden;
+    /* background-color: red; */
+}
+.lef>.desc>span{
+    margin-top:2px;
+    max-width: 30vmax;
+    display: flex;
+    color: rgb(95, 94, 94);
+    font-size:1vmax;
+    height:50px;
+    text-overflow: ellipsis;
+    overflow-y: hidden;
+
+}
+.post_dets{
+    margin-top: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding-right: 30px;
+}
+.post_dets>.lef{
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.post_dets>.lef>h5{
+    margin-top: 1px;
+    color: grey;
+    font-size: 0.9vmax;
+}
+.interest_bubble{
+
+}
+.interest_bubble{
+    /* width: 5vmax; */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+    padding:5px 10px;
+    font-size: 0.8vmax;
+    color: rgb(118, 116, 116);
+    background-color: rgb(225, 224, 224);
+}
+.rig>img{
+    max-width: 15vmax;
+}
+/* post partition end */
+
