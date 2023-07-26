@@ -36,7 +36,7 @@ const Home = () => {
           "bgc":"rgb(235, 235, 235)",
           "color": "rgb(86, 85, 85)",
           "border_rad":"40px",
-          "font_size": "0.9vmax"
+          "font_size": "0.9vmax",
         }}/>
       </div>
 
