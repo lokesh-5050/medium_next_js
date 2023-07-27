@@ -1,7 +1,10 @@
+
 .post_card{
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 10px;
+    padding-bottom: 2vh;
 }
 
 .lef>.owner_name{
@@ -65,7 +68,9 @@
     background-color: rgb(225, 224, 224);
 }
 .rig>img{
-    max-width: 15vmax;
+    max-width: 13vmax;
+    margin-top: 10px;
+    
 }
 /* post partition end */
 

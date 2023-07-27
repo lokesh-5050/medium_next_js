@@ -6,6 +6,8 @@ import sampleImg from "../../../public/images/sample_img.avif";
 const Article = () => {
   return (
     <section>
+      <div className={`${style.post_cards}`}>
+
        <div className={`${style.post_card}`}>
           <div className={`${style.lef}`}>
             <div className={`${style.owner_name}`}>
@@ -46,6 +48,7 @@ const Article = () => {
             <Image src={sampleImg} alt="" />
           </div>
         </div>
+      </div>
     </section>
   )
 }

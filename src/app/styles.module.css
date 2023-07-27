@@ -3,7 +3,8 @@
     background-color: rgb(254,192,22);
     display: flex;
     justify-content: space-between;
-    padding: 2vh 8vmax;
+    padding: 0 8vmax;
+    padding-top: 10vh;
     border-bottom: 1px solid black;
 
 }
@@ -11,7 +12,7 @@
 
 }
 .section1>h1{
-    margin-top: 30px;
+    margin-top: 60px;
     font-size: 7vmax;
 }
 .section1>h4{
@@ -40,6 +41,57 @@
     width: 100%;
     justify-content: space-between;
     padding: 5vh 8vmax;
-    margin-top: 4vh;
-    
+    margin-top: 2vh;
+    gap: 80px;
 }
+.post_cards{
+    padding-top: 3vh;
+}
+
+/* right partation of posts start */
+.right_partation{
+
+}
+.right_partation>h3{
+    /* margin-top: 1vh; */
+    margin-bottom: 2vh;
+}
+.right_partation>h4{
+    margin-top: 3vh;
+    margin-bottom: 2vh;
+    color: rgb(34,139,30);
+    font-size: 0.95vmax;
+}
+.grid_options{
+    
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 30vmax;
+
+    gap: 10px;
+}
+
+.grey_line{
+    margin-top: 4vh;
+    height: 0.7px;
+    width: inherit;
+    background-color: rgb(188, 188, 188);
+}
+.right_partation>.help_rows{
+    margin-top: 5vh;
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: 25px;
+    color: grey;
+    line-height: 0.7vh;
+  
+}
+.right_partation>.help_rows{
+    width: 90%;
+}
+.right_partation>.help_rows>h5{
+    font-size: 0.95vmax;
+  
+}
+/* right partation of posts  end */
