@@ -1,9 +1,55 @@
+.get_started_pop_up{
+    width: 100%;
+height: 100%;
+    background-color: rgba(241, 236, 236, 0.925);
+    position: fixed;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.cen_box{
+    width: 50%;
+    height:92%;
+    background-color: #fff;
+ 
+}
+.cen_box>.close{
+    display: flex;
+    justify-content: end;
+    padding: 10px 20px;
+    font-size: 1.5vmax;
+}
+.cen_box>.content{
+    
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    align-items: center;
+}
+.cen_box>.content>h1{
+    font-size: 1.8vmax;
+}
+.cen_box>.content>.actions{
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.cen_box>.content>.terms_andc_condition{
+    width: 90%;
+    text-align: center;
+}
 .head_section{
     width: 100%;
     background-color: rgb(254,192,22);
     display: flex;
     justify-content: space-between;
-    padding: 0 8vmax;
+    padding-left:8vmax;
     padding-top: 10vh;
     border-bottom: 1px solid black;
 
@@ -18,6 +64,16 @@
 .section1>h4{
     width: 65%;
     font-size: 1.8vmax;
+}
+.section2{
+    display: flex;
+    flex-wrap: wrap;
+    /* flex-direction: row; */
+    /* align-items: start; */
+    /* justify-content: start; */
+    gap: 15px;
+    max-width: 30%;
+     /* background-color: #aa0b0b; */
 }
 
 .start_reading{
@@ -37,6 +93,7 @@
 
 /* post partition start */
 .post_partitation{
+    position: relative;
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -50,13 +107,34 @@
 
 /* right partation of posts start */
 .right_partation{
+    transition: all cubic-bezier(0.19, 1, 0.22, 1) 2s;
 
+}
+.right_partation_final{
+    max-width: 30vmax;
+
+    position: fixed;
+    z-index: 102;
+    left: 62.25%;
+    top: 16%;
+    transition: all cubic-bezier(0.19, 1, 0.22, 1) 2s;
+    /* background-color: red; */
 }
 .right_partation>h3{
     /* margin-top: 1vh; */
     margin-bottom: 2vh;
 }
+.right_partation_final>h3{
+    /* margin-top: 1vh; */
+    margin-bottom: 2vh;
+}
 .right_partation>h4{
+    margin-top: 3vh;
+    margin-bottom: 2vh;
+    color: rgb(34,139,30);
+    font-size: 0.95vmax;
+}
+.right_partation_final>h4{
     margin-top: 3vh;
     margin-bottom: 2vh;
     color: rgb(34,139,30);
@@ -67,7 +145,6 @@
     display: flex;
     flex-wrap: wrap;
     max-width: 30vmax;
-
     gap: 10px;
 }
 
@@ -85,13 +162,26 @@
     gap: 25px;
     color: grey;
     line-height: 0.7vh;
-  
+}
+.right_partation_final>.help_rows{
+    margin-top: 5vh;
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: 25px;
+    color: grey;
+    line-height: 0.7vh;
 }
 .right_partation>.help_rows{
     width: 90%;
 }
 .right_partation>.help_rows>h5{
     font-size: 0.95vmax;
-  
+}
+.right_partation_final>.help_rows{
+    width: 90%;
+}
+.right_partation_final>.help_rows>h5{
+    font-size: 0.95vmax;
 }
 /* right partation of posts  end */
