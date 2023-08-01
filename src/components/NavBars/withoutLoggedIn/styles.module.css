@@ -37,6 +37,7 @@
 }
 
 .get_started_btn_black{
+    cursor: pointer;
     padding: 9px 15px;
     background-color: black;
     color: white;
@@ -45,6 +46,7 @@
 
 }
 .get_started_btn_green{
+    cursor: pointer;
     padding: 9px 15px;
     background-color: rgb(25,137,23);
     color: white;

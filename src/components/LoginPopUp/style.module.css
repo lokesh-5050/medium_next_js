@@ -1,0 +1,52 @@
+.get_started_pop_up{
+    width: 100%;
+height: 100%;
+    background-color: rgba(241, 236, 236, 0.925);
+    position: fixed;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.cen_box{
+    width: 50%;
+    height:92%;
+    background-color: #fff;
+ 
+}
+.cen_box>.close{
+    display: flex;
+    justify-content: end;
+    padding: 10px 20px;
+    font-size: 1.5vmax;
+}
+.cen_box>.content{
+    
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    align-items: center;
+}
+.cen_box>.content>h1{
+    font-size: 1.8vmax;
+}
+.cen_box>.content>.actions{
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.already_have{
+
+    padding-top: 30px;
+}
+.cen_box>.content>.terms_andc_condition{
+    width: 90%;
+    text-align: center;
+    color: gray;
+    font-size: 0.9vmax;
+}
