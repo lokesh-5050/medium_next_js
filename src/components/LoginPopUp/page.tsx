@@ -3,7 +3,7 @@ import React from 'react'
 
 import OutlineWithIconBtn from '../Buttons/OutlineButton/page'
 import style from './style.module.css'
-const LoginPopUp = (params) => {
+const LoginPopUp = (params:any) => {
   console.log("The data is ",params);
   
   return (

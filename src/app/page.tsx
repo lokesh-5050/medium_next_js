@@ -2,7 +2,7 @@
 import style from "./styles.module.css";
 import WithoutLogedInNavrBar from "@/components/NavBars/withoutLoggedIn/page";
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import logo from "./favicon.ico";
 import sampleImg from "../../public/images/sample_img.avif";
 
@@ -11,10 +11,13 @@ import Article from "@/components/Articles/page";
 import Btn from "@/components/Buttons/page";
 import OutlineWithIconBtn from "@/components/Buttons/OutlineButton/page";
 import LoginPopUp from "@/components/LoginPopUp/page";
+import LoggedInNavBar from "@/components/NavBars/LoggedInNavBar/page";
 
 const Home = () => {
-  const [showLoginPopUp, setshowLoginPopUp] = useState(true);
+  const [showLoginPopUp, setshowLoginPopUp] = useState(false);
   const [fixPositionOfOptions, setFixPositionOfOptions] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const mContainer = useRef(null);
   const chnageOptionsPosition = () => {
     if (window.scrollY >= 860) {
       setFixPositionOfOptions(true);
@@ -22,17 +25,39 @@ const Home = () => {
       setFixPositionOfOptions(false);
     }
   };
-  useEffect(()=>{
+  useEffect(() => {
     window.addEventListener("scroll", chnageOptionsPosition);
-  },[])
+    // console.log("YAY =>",mContainer.current.querySelectorAll('.letters')[0]);
+    // var listOfM = mContainer.current.querySelectorAll(".letters");
+    // for (let index = 0; index < listOfM.length; index++) {
+    //   const element = listOfM[index];
+    //   setInterval(() => {
+    //     let gotRdnmIndex = random(0, listOfM.length);
+    //     console.log("rndm index =>>", gotRdnmIndex);
+    //     setTimeout(() => {
+    //       listOfM[gotRdnmIndex].style.opacity = "1";
+    //     }, 500);
+    //     listOfM[gotRdnmIndex].style.opacity = "0";
+    //     listOfM[gotRdnmIndex].style.transition =
+    //       "all cubic-bezier(0.19, 1, 0.22, 1) 1s";
+    //     // }, 2000);
+    //   }, 2000);
 
+    //   console.log(random(0, listOfM.length));
+    // }
+  }, []);
 
+  // function random(min: number, max: number) {
+  //   return Math.floor(Math.random() * (max - min + 1)) + min;
+  // }
 
   return (
     <section className={`${style.main}`}>
-      {/* {showLoginPopUp ? <LoginPopUp data="hey"/> : null} */}
 
-      {showLoginPopUp ? <LoginPopUp setshowLoginPopUp={setshowLoginPopUp}/> : null }  
+
+      {/* {showLoginPopUp ? (
+        <LoginPopUp setshowLoginPopUp={setshowLoginPopUp} />
+      ) : null}
       <WithoutLogedInNavrBar setshowLoginPopUp={setshowLoginPopUp} />
 
       <div className={`${style.head_section}`}>
@@ -45,37 +70,38 @@ const Home = () => {
             <h6>Start reading</h6>
           </div>
         </div>
-        <div className={`${style.section2}`}>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
-          <h4>M</h4>
+        <div ref={mContainer} className={`${style.section2}`}>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
+          <h4 className="letters">M</h4>
         </div>
       </div>
+
       <TrendingArticle />
 
       <div className={`${style.post_partitation}`}>
@@ -213,7 +239,8 @@ const Home = () => {
             <h5>Teams</h5>
           </div>
         </div>
-      </div>
+      </div> */}
+      <LoggedInNavBar/>
     </section>
   );
 };

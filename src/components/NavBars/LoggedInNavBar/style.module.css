@@ -1,0 +1,36 @@
+.nav_container{
+    display: flex;
+    padding: 1vh 2vmax;
+
+}
+.lef{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search_bar{
+    display: flex;
+    padding: 10px 20px;
+    padding-right: 5vmax;
+    background-color: rgb(241, 240, 240);
+    border-radius: 40px;
+    justify-content: space-between;
+    gap: 10px;
+    color: grey;
+    font-size: 0.9vmax;
+    align-items: center;
+}
+.write_logo_text{
+    display: flex;
+    gap: 5px;
+    font-size: 0.9vmax;
+    align-items: center;
+    color: grey;
+
+}
+.profile{
+    /* border-radius: 40px; */
+;
+}
+/* #BCBCBC */

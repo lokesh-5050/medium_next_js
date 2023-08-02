@@ -12,6 +12,7 @@ const OutlineWithIconBtn = (params: any) => {
       <div
         className={``}
         style={{
+          cursor:'pointer',
           backgroundColor: bgc,
           borderRadius: border_rad,
           padding: padding,
