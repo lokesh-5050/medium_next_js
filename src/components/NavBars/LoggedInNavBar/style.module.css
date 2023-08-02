@@ -1,12 +1,13 @@
 .nav_container{
     display: flex;
     padding: 1vh 2vmax;
-
+    justify-content: space-between;
+    border-bottom: 0.1px solid black;
 }
 .lef{
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
 }
 
 .search_bar{
@@ -29,8 +30,35 @@
     color: grey;
 
 }
-.profile{
-    /* border-radius: 40px; */
-;
+.right{
+    display: flex;
+    gap: 35px;
+    align-items: center;
 }
+.profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    transition: all cubic-bezier(0.19, 1, 0.22, 1) 2s;
+}
+.profile>img{
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    border-radius: 40px;
+    object-fit: cover;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.drop_down{
+    transition: all cubic-bezier(0.19, 1, 0.22, 1) 1s;
+}
+
+
+
+
+
 /* #BCBCBC */

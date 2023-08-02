@@ -1,10 +1,10 @@
 import React from "react";
 import style from "./style.module.css";
 import Image from "next/image";
-const LoggedInNavBar = () => {
+const LoggedInNavBar = (params:any) => {
   return (
     <section>
-      <div className={`${style.nav_container}`}>
+      <div onClick={()=> params.setisDropDownOpened(!params.isDropDownOpened)} className={`${style.nav_container}`}>
         <div className={`${style.lef}`}>
           <div className="logo">
             <svg height={25} viewBox="0 0 1043.63 592.71" className="q r">
@@ -67,17 +67,20 @@ const LoggedInNavBar = () => {
               ></path>
             </svg>
           </h5>
+          {/* <Image style={{borderRadius:'100px'}} objectFit="content" width={20} height={60} src="https://images.unsplash.com/photo-1690615497820-dbedbfb47dd1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2787&q=80" alt=""/> */}
           <div className={`${style.profile}`}>
-            <Image
-            style={{borderRadius:'100px'}}
-              src=
-                "https://images.unsplash.com/photo-1690722763462-2ca402aa163f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2787&q=80"
-             width={50}height={50}
-              alt=""
-            />
+            <img className="dropDown" src="https://images.unsplash.com/photo-1690615497820-dbedbfb47dd1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2787&q=80" alt="" />
+            <div className={`${style.drop_down} dropDown`}>
+                {!params.isDropDownOpened ? <img width="10" className="dropDown" height="10" src="https://img.icons8.com/fluency-systems-filled/48/000000/expand-arrow.png" alt="expand-arrow"/> : <img width="10" className="dropDown" height="10" src="https://img.icons8.com/ios/50/000000/collapse-arrow--v1.png" alt="collapse-arrow--v1"/> } 
+            </div>
           </div>
+
+          
+
         </div>
       </div>
+
+
     </section>
   );
 };
