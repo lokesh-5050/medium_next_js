@@ -17,47 +17,32 @@ import LoggedInPosts from "@/components/Posts/page";
 const Home = () => {
   const [showLoginPopUp, setshowLoginPopUp] = useState(false);
   const [fixPositionOfOptions, setFixPositionOfOptions] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [fixLoggedInAppBar, setfixLoggedInAppBar] = useState(false)
   const mContainer = useRef(null);
   const [isDropDownOpened, setisDropDownOpened] = useState(false);
   const chnageOptionsPosition = () => {
+    console.log(window.scrollY);
+    
     if (window.scrollY >= 860) {
       setFixPositionOfOptions(true);
+    } else if(window.scrollY >= 56){
+      setfixLoggedInAppBar(true);
+      setFixPositionOfOptions(false);
     } else {
+      setfixLoggedInAppBar(false);
       setFixPositionOfOptions(false);
     }
   };
   useEffect(() => {
-    window.addEventListener('click',(e)=>{
-      console.log("THTH",e.target.className);
-      // e.target.className != 'dropDown' ? setisDropDownOpened(false) : setisDropDownOpened(!isDropDownOpened);
-      if(e.target.className === 'dropDown'){
+    window.addEventListener("click", (e) => {
+      if (e.target.className === "dropDown") {
         console.log("Target is this");
-        
-      }else{
+      } else {
         setisDropDownOpened(false);
       }
-      
     });
     window.addEventListener("scroll", chnageOptionsPosition);
-    // console.log("YAY =>",mContainer.current.querySelectorAll('.letters')[0]);
-    // var listOfM = mContainer.current.querySelectorAll(".letters");
-    // for (let index = 0; index < listOfM.length; index++) {
-    //   const element = listOfM[index];
-    //   setInterval(() =>{
-    //     let gotRdnmIndex = random(0, listOfM.length);
-    //     console.log("rndm index =>>", gotRdnmIndex);
-    //     setTimeout(() => {
-    //       listOfM[gotRdnmIndex].style.opacity = "1";
-    //     }, 500);
-    //     listOfM[gotRdnmIndex].style.opacity = "0";
-    //     listOfM[gotRdnmIndex].style.transition =
-    //       "all cubic-bezier(0.19, 1, 0.22, 1) 1s";
-    //     // }, 2000);
-    //   }, 2000);
-
-    //   console.log(random(0, listOfM.length));
-    // }
   }, []);
 
   // function random(min: number, max: number) {
@@ -66,198 +51,23 @@ const Home = () => {
 
   return (
     <section className={`${style.main}`}>
-      {/* {showLoginPopUp ? (
+      {isLoggedIn ? (
+        <LoggedInNavBar
+          isDropDownOpened={isDropDownOpened}
+          setisDropDownOpened={setisDropDownOpened}
+        />
+      ) : (
+        <WithoutLogedInNavrBar setshowLoginPopUp={setshowLoginPopUp} />
+      )}
+      {showLoginPopUp ? (
         <LoginPopUp setshowLoginPopUp={setshowLoginPopUp} />
       ) : null}
-      <WithoutLogedInNavrBar setshowLoginPopUp={setshowLoginPopUp} />
 
-      <div className={`${style.head_section}`}>
-        <div className={`${style.section1}`}>
-          <h1>Stay curious.</h1>
-          <h4>
-            Discover stories, thinking, and expertise from writers on any topic
-          </h4>
-          <div className={`${style.start_reading}`}>
-            <h6>Start reading</h6>
-          </div>
-        </div>
-        <div ref={mContainer} className={`${style.section2}`}>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-          <h4 className="letters">M</h4>
-        </div>
-      </div>
 
-      <TrendingArticle />
 
-      <div className={`${style.post_partitation}`}>
-        <div className={`${style.post_cards}`}>
-          <Article />
-          <Article />
-          <Article />
-          <Article />
-          <Article />
-          <Article />
-          <Article />
-          <Article />
-          <Article />
-        </div>
-        <div
-          className={`${
-            fixPositionOfOptions
-              ? `${style.right_partation_final}`
-              : `${style.right_partation}`
-          }`}
-        >
-          <h3>Discover more of what matters to you</h3>
-          <div className={`${style.grid_options}`}>
-            <Btn
-              data={{
-                padding: "10px 20px",
-                text: "Programming",
-                bgc: "rgb(235, 235, 235)",
-                color: "rgb(86, 85, 85)",
-                border_rad: "40px",
-                font_size: "0.9vmax",
-              }}
-            />
-            <Btn
-              data={{
-                padding: "10px 20px",
-                text: "Programming",
-                bgc: "rgb(235, 235, 235)",
-                color: "rgb(86, 85, 85)",
-                border_rad: "40px",
-                font_size: "0.9vmax",
-              }}
-            />
-            <Btn
-              data={{
-                padding: "10px 20px",
-                text: "Programming",
-                bgc: "rgb(235, 235, 235)",
-                color: "rgb(86, 85, 85)",
-                border_rad: "40px",
-                font_size: "0.9vmax",
-              }}
-            />
-            <Btn
-              data={{
-                padding: "10px 20px",
-                text: "Programming",
-                bgc: "rgb(235, 235, 235)",
-                color: "rgb(86, 85, 85)",
-                border_rad: "40px",
-                font_size: "0.9vmax",
-              }}
-            />
-            <Btn
-              data={{
-                padding: "10px 20px",
-                text: "Programming",
-                bgc: "rgb(235, 235, 235)",
-                color: "rgb(86, 85, 85)",
-                border_rad: "40px",
-                font_size: "0.9vmax",
-              }}
-            />
-            <Btn
-              data={{
-                padding: "10px 20px",
-                text: "Programming",
-                bgc: "rgb(235, 235, 235)",
-                color: "rgb(86, 85, 85)",
-                border_rad: "40px",
-                font_size: "0.9vmax",
-              }}
-            />
-            <Btn
-              data={{
-                padding: "10px 20px",
-                text: "Programming",
-                bgc: "rgb(235, 235, 235)",
-                color: "rgb(86, 85, 85)",
-                border_rad: "40px",
-                font_size: "0.9vmax",
-              }}
-            />
-            <Btn
-              data={{
-                padding: "10px 20px",
-                text: "Programming",
-                bgc: "rgb(235, 235, 235)",
-                color: "rgb(86, 85, 85)",
-                border_rad: "40px",
-                font_size: "0.9vmax",
-              }}
-            />
-            <Btn
-              data={{
-                padding: "10px 20px",
-                text: "Programming",
-                bgc: "rgb(235, 235, 235)",
-                color: "rgb(86, 85, 85)",
-                border_rad: "40px",
-                font_size: "0.9vmax",
-              }}
-            />
-          </div>
-          <h4>See more topics</h4>
-          <div className={`${style.grey_line}`}></div>
-          <div className={`${style.help_rows}`}>
-            <h5>Help</h5>
-
-            <h5>Status</h5>
-
-            <h5>Writers</h5>
-
-            <h5>Blog</h5>
-
-            <h5>Careers</h5>
-
-            <h5>Privacy</h5>
-
-            <h5>Terms</h5>
-            <h5>About</h5>
-
-            <h5>Text to speech</h5>
-
-            <h5>Teams</h5>
-          </div>
-        </div>
-      </div> */}
-      <LoggedInNavBar
-        isDropDownOpened={isDropDownOpened}
-        setisDropDownOpened={setisDropDownOpened}
-      />
-      {/* Drop down Button starts */}
-
-      {isDropDownOpened ? (
+      {isLoggedIn ? (
+        <div className={`${style.main_partittion}`}>
+          {isDropDownOpened ? (
         <div className={`${style.drop_down_main_container}`}>
           <div className={`${style.icons_options}`}>
             <div className={`${style.option}`}>
@@ -383,37 +193,277 @@ const Home = () => {
           </div>
         </div>
       ) : null}
+          <div className={`${style.left_section}`}>
+            <div className={ !fixLoggedInAppBar ?  `${style.app_bar_initial}` : `${style.app_bar_final}`}>
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/ios/50/000000/plus-math--v1.png"
+                alt="plus-math--v1"
+              />
+              <h5>For you</h5>
+              <h5>Following</h5>
+            </div>
+
+            {/* Logged In Member Posts starts  */}
+            <div className={ !fixLoggedInAppBar ?  `${style.post_section_initial}` :`${style.post_section_final}` }>
+              <LoggedInPosts />
+              <LoggedInPosts />
+              <LoggedInPosts />
+              <LoggedInPosts />
+              <LoggedInPosts />
+              <LoggedInPosts />
+              <LoggedInPosts />
+              <LoggedInPosts />
+              <LoggedInPosts />
+              <LoggedInPosts />
+              <LoggedInPosts />
+              <LoggedInPosts />
+            </div>
+            {/* Logged In Member Posts ends  */}
+          </div>
+           
+          <div className={`${style.right_section}`}>
+            <div className={`${style.staff_picks}`}>
+              <h4>Staff Picks</h4>
+              <div className={`${style.pick_cards}`}>
+                <div className={`${style.pick_card}`}>
+                  <div className={`${style.pc_top_section}`}>
+                    <img
+                      src="https://images.unsplash.com/photo-1690789460292-f21f50be653a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2874&q=80"
+                      alt=""
+                    />
+                    <h6>Robert Brown</h6>
+                  </div>
+                  <h1>
+                    Statistically , You Will Marry the Wrong person will marry
+                    the wrong person
+                  </h1>
+                </div>
+                <div className={`${style.pick_card}`}>
+                  <div className={`${style.pc_top_section}`}>
+                    <img
+                      src="https://images.unsplash.com/photo-1690789460292-f21f50be653a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2874&q=80"
+                      alt=""
+                    />
+                    <h6>Robert Brown</h6>
+                  </div>
+                  <h1>
+                    Statistically , You Will Marry the Wrong person will marry
+                    the wrong person
+                  </h1>
+                </div>
+                <div className={`${style.pick_card}`}>
+                  <div className={`${style.pc_top_section}`}>
+                    <img
+                      src="https://images.unsplash.com/photo-1690789460292-f21f50be653a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2874&q=80"
+                      alt=""
+                    />
+                    <h6>Robert Brown</h6>
+                  </div>
+                  <h1>
+                    Statistically , You Will Marry the Wrong person will marry
+                    the wrong person
+                  </h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="logged_out_user">
+          <div className={`${style.head_section}`}>
+            <div className={`${style.section1}`}>
+              <h1>Stay curious.</h1>
+              <h4>
+                Discover stories, thinking, and expertise from writers on any
+                topic
+              </h4>
+              <div className={`${style.start_reading}`}>
+                <h6>Start reading</h6>
+              </div>
+            </div>
+            <div ref={mContainer} className={`${style.section2}`}>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+              <h4 className="letters">M</h4>
+            </div>
+          </div>
+
+          <TrendingArticle />
+
+          <div className={`${style.post_partitation}`}>
+            <div className={`${style.post_cards}`}>
+              <Article />
+              <Article />
+              <Article />
+              <Article />
+              <Article />
+              <Article />
+              <Article />
+              <Article />
+              <Article />
+            </div>
+            <div
+              className={`${
+                fixPositionOfOptions
+                  ? `${style.right_partation_final}`
+                  : `${style.right_partation}`
+              }`}
+            >
+              <h3>Discover more of what matters to you</h3>
+              <div className={`${style.grid_options}`}>
+                <Btn
+                  data={{
+                    padding: "10px 20px",
+                    text: "Programming",
+                    bgc: "rgb(235, 235, 235)",
+                    color: "rgb(86, 85, 85)",
+                    border_rad: "40px",
+                    font_size: "0.9vmax",
+                  }}
+                />
+                <Btn
+                  data={{
+                    padding: "10px 20px",
+                    text: "Programming",
+                    bgc: "rgb(235, 235, 235)",
+                    color: "rgb(86, 85, 85)",
+                    border_rad: "40px",
+                    font_size: "0.9vmax",
+                  }}
+                />
+                <Btn
+                  data={{
+                    padding: "10px 20px",
+                    text: "Programming",
+                    bgc: "rgb(235, 235, 235)",
+                    color: "rgb(86, 85, 85)",
+                    border_rad: "40px",
+                    font_size: "0.9vmax",
+                  }}
+                />
+                <Btn
+                  data={{
+                    padding: "10px 20px",
+                    text: "Programming",
+                    bgc: "rgb(235, 235, 235)",
+                    color: "rgb(86, 85, 85)",
+                    border_rad: "40px",
+                    font_size: "0.9vmax",
+                  }}
+                />
+                <Btn
+                  data={{
+                    padding: "10px 20px",
+                    text: "Programming",
+                    bgc: "rgb(235, 235, 235)",
+                    color: "rgb(86, 85, 85)",
+                    border_rad: "40px",
+                    font_size: "0.9vmax",
+                  }}
+                />
+                <Btn
+                  data={{
+                    padding: "10px 20px",
+                    text: "Programming",
+                    bgc: "rgb(235, 235, 235)",
+                    color: "rgb(86, 85, 85)",
+                    border_rad: "40px",
+                    font_size: "0.9vmax",
+                  }}
+                />
+                <Btn
+                  data={{
+                    padding: "10px 20px",
+                    text: "Programming",
+                    bgc: "rgb(235, 235, 235)",
+                    color: "rgb(86, 85, 85)",
+                    border_rad: "40px",
+                    font_size: "0.9vmax",
+                  }}
+                />
+                <Btn
+                  data={{
+                    padding: "10px 20px",
+                    text: "Programming",
+                    bgc: "rgb(235, 235, 235)",
+                    color: "rgb(86, 85, 85)",
+                    border_rad: "40px",
+                    font_size: "0.9vmax",
+                  }}
+                />
+                <Btn
+                  data={{
+                    padding: "10px 20px",
+                    text: "Programming",
+                    bgc: "rgb(235, 235, 235)",
+                    color: "rgb(86, 85, 85)",
+                    border_rad: "40px",
+                    font_size: "0.9vmax",
+                  }}
+                />
+              </div>
+              <h4>See more topics</h4>
+              <div className={`${style.grey_line}`}></div>
+              <div className={`${style.help_rows}`}>
+                <h5>Help</h5>
+
+                <h5>Status</h5>
+
+                <h5>Writers</h5>
+
+                <h5>Blog</h5>
+
+                <h5>Careers</h5>
+
+                <h5>Privacy</h5>
+
+                <h5>Terms</h5>
+                <h5>About</h5>
+
+                <h5>Text to speech</h5>
+
+                <h5>Teams</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Drop down Button starts */}
+
+      
 
       {/* Drop down Button ends */}
 
       {/* Main body starts here for logged in user */}
-      <div className={`${style.main_partittion}`}>
-        <div className={`${style.left_section}`}>
-          <div className={`${style.app_bar}`}>
-            <img
-              width="30"
-              height="30"
-              src="https://img.icons8.com/ios/50/000000/plus-math--v1.png"
-              alt="plus-math--v1"
-            />
-            <h5>For you</h5>
-            <h5>Following</h5>
-          </div>
 
-          {/* Logged In Member Posts starts  */}
-          <div className={`${style.post_section}`}>
-            <LoggedInPosts/>
-            <LoggedInPosts/>
-            <LoggedInPosts/>
-          </div>
-          {/* Logged In Member Posts ends  */}
-        </div>
-        <div className={`${style.right_section}`}>
-          <div className={`${style.staff_picks}`}>
-            <h4>Staff Picks</h4>
-          </div>
-        </div>
-      </div>
       {/* Main body ends here for logged in user */}
     </section>
   );
