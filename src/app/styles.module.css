@@ -229,7 +229,9 @@ justify-content: space-between;
 }
 
 .post_section{
-    padding: 5vh 10vmax;
+    padding-left: 10vmax;
+    padding-top: 5vh;
+    padding-right: 4vmax;
 }
 
 
