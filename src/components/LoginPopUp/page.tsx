@@ -1,20 +1,25 @@
 // 'use-client'
 import React, { useState, useRef } from "react";
-import {sendEmail} from '@/helpers/mailer'
+import { sendEmail } from "@/helpers/mailer";
+import { sendRequest } from "@/helpers/helper";
 import OutlineWithIconBtn from "../Buttons/OutlineButton/page";
 import style from "./style.module.css";
 import Btn from "../Buttons/page";
 import { OtpInput } from "reactjs-otp-input";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+import axios from "axios";
 
 const LoginPopUp = (params: any) => {
   console.log("The data is ", params);
   const [isEmailBtnActive, setisEmailBtnActive] = useState(false);
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [email, setEmail] = useState("");
+  const [isDetailsFilled, setIsDetailsFilled] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
+
+  //user details
+  const [userName, setUserName] = useState("");
 
   const [otp1, setotp1] = useState(null);
   const [otp2, setotp2] = useState(null);
@@ -30,11 +35,10 @@ const LoginPopUp = (params: any) => {
   const otpRef5 = useRef();
   const otpRef6 = useRef();
 
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [showPassword, setshowPassword] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirmPassword, setshowConfirmPassword] = useState(false);
-
 
   const handleOtpChange = (e: any) => {
     console.log(e);
@@ -52,17 +56,36 @@ const LoginPopUp = (params: any) => {
     }
   };
 
+  const createUser = async () => {
+    console.log('inside createUser');
+    axios.post('/api/users/signup').then((e)=>{
+      console.log("The response =>",e.data);
+      
+    });
+    // const response = await sendRequest({routePath:'/api/users/signup',requestType:'POST',data:{
+    //   "username":userName,
+    //   email,
+    //   password
+    // }});
+    console.log('in the last line of createUser');
+  };
+
   return (
     <section>
-
       <div className={`${style.get_started_pop_up}`}>
-      <ToastContainer/>
+        <ToastContainer />
 
-        {isEmailBtnActive && !isEmailSent && !otpVerified ? (
+        {isEmailBtnActive &&
+        !isEmailSent &&
+        !otpVerified &&
+        !isDetailsFilled ? (
           <div className={`${style.email_btn_active}`}>
-            <div className={`${style.dismiss}`} onClick={() => {
-                  params.setshowLoginPopUp(false);
-                }}>
+            <div
+              className={`${style.dismiss}`}
+              onClick={() => {
+                params.setshowLoginPopUp(false);
+              }}
+            >
               <h1>X</h1>
             </div>
 
@@ -71,39 +94,40 @@ const LoginPopUp = (params: any) => {
             <div className={`${style.text_field_box}`}>
               <h6>Your email</h6>
               <input
-              value={email}
-              onChange={(e)=>setEmail(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className={`${style.textField}`}
                 type="text"
                 placeholder="Enter email"
               />
             </div>
-            <div onClick={()=>{
-              console.log("ehehhe");
-              toast('Enter a valid email');
-              
-              // console.log("The response of email is => ",sendEmail('mali.lokesh5050@gmail.com','Send_Otp',));
-              const validateEmail = () => {
-                const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-                if (!emailRegex.test(email)) {
-                } else {
+            <div
+              onClick={() => {
+                console.log("ehehhe");
 
-                }
-              }
-              validateEmail();
-
-            }} className="send_email">
-              
-            <Btn
-              data={{
-                padding: "11px 80px",
-                text: "Continue",
-                bgc: "#000",
-                color: "#fff",
-                border_rad: "40px",
-                font_size: "0.9vmax",
+                // console.log("The response of email is => ",sendEmail('mali.lokesh5050@gmail.com','Send_Otp',));
+                const validateEmail = () => {
+                  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+                  if (!emailRegex.test(email)) {
+                    toast("Enter a valid email");
+                  } else {
+                    setIsEmailSent(true);
+                  }
+                };
+                validateEmail();
               }}
-            />
+              className="send_email"
+            >
+              <Btn
+                data={{
+                  padding: "11px 80px",
+                  text: "Continue",
+                  bgc: "#000",
+                  color: "#fff",
+                  border_rad: "40px",
+                  font_size: "0.9vmax",
+                }}
+              />
             </div>
             <div className={`${style.back_btn}`}>
               <img
@@ -122,9 +146,15 @@ const LoginPopUp = (params: any) => {
               </h6>
             </div>
           </div>
-        ) : isEmailBtnActive && isEmailSent && !otpVerified ? (
+        ) : isEmailBtnActive &&
+          isEmailSent &&
+          !otpVerified &&
+          isDetailsFilled ? (
           <div className={`${style.email_sent}`}>
-            <div className={`${style.dismiss}`} onClick={()=> params.setshowLoginPopUp(false)}>
+            <div
+              className={`${style.dismiss}`}
+              onClick={() => params.setshowLoginPopUp(false)}
+            >
               <h1>X</h1>
             </div>
             <h1>Check your inbox.</h1>
@@ -201,67 +231,118 @@ const LoginPopUp = (params: any) => {
               }}
             />
           </div>
-        ) : isEmailBtnActive && isEmailSent && otpVerified ? (
+        ) : isEmailBtnActive &&
+          isEmailSent &&
+          !otpVerified &&
+          !isDetailsFilled ? (
           <div className={`${style.email_sent} ${style.new_password_set}`}>
-            <div className={`${style.dismiss}`} onClick={()=>{
-              params.setshowLoginPopUp(false);
-            }}>
+            <div
+              className={`${style.dismiss}`}
+              onClick={() => {
+                params.setshowLoginPopUp(false);
+              }}
+            >
               <h1>X</h1>
             </div>
-            <h1>Let's set up password for you account!</h1>
+            <h1>Let's set up your account!</h1>
             <h5>
               We suggest to use a strong password with combination of %#&*_+ and
               numbers.
             </h5>
+
             <div className={`${style.password_fields}`}>
+              <input
+                type="text"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className={`${style.password}`}
+                placeholder="Enter a username"
+              />
               <div className={`${style.password_row1}`}>
                 <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className={`${style.password}`}
-                  type={`${showPassword ? "text":"password"}`}
+                  type={`${showPassword ? "text" : "password"}`}
                   placeholder="Enter a password"
                 />
-                <h6 onClick={()=> setshowPassword(!showPassword)}>
-                  {!showPassword ?(<img
-                    width="20"
-                    height="8"
-                    src="https://img.icons8.com/fluency-systems-regular/48/visible.png"
-                    alt="visible"
-                  />):(
-                  <img width="20" height="8" src="https://img.icons8.com/fluency-systems-filled/48/visible.png" alt="visible"/>
-                   ) }
-                  
+                <h6 onClick={() => setshowPassword(!showPassword)}>
+                  {!showPassword ? (
+                    <img
+                      width="20"
+                      height="8"
+                      src="https://img.icons8.com/fluency-systems-regular/48/visible.png"
+                      alt="visible"
+                    />
+                  ) : (
+                    <img
+                      width="20"
+                      height="8"
+                      src="https://img.icons8.com/fluency-systems-filled/48/visible.png"
+                      alt="visible"
+                    />
+                  )}
                 </h6>
               </div>
-              
+
               <div className={`${style.password_row1}`}>
                 <input
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  value={confirmPassword}
                   className={`${style.password}`}
-                  type={`${showConfirmPassword ? "text":"password"}`}
+                  type={`${showConfirmPassword ? "text" : "password"}`}
                   placeholder="Confirm password"
                 />
-                <h6 onClick={()=> setshowConfirmPassword(!showConfirmPassword)}>
-                {!showConfirmPassword ?(<img
-                    width="20"
-                    height="8"
-                    src="https://img.icons8.com/fluency-systems-regular/48/visible.png"
-                    alt="visible"
-                  />):(
-                  <img width="20" height="8" src="https://img.icons8.com/fluency-systems-filled/48/visible.png" alt="visible"/>
-                   ) }
+                <h6
+                  onClick={() => setshowConfirmPassword(!showConfirmPassword)}
+                >
+                  {!showConfirmPassword ? (
+                    <img
+                      width="20"
+                      height="8"
+                      src="https://img.icons8.com/fluency-systems-regular/48/visible.png"
+                      alt="visible"
+                    />
+                  ) : (
+                    <img
+                      width="20"
+                      height="8"
+                      src="https://img.icons8.com/fluency-systems-filled/48/visible.png"
+                      alt="visible"
+                    />
+                  )}
                 </h6>
               </div>
-             
             </div>
-            <Btn
-              data={{
-                padding: "11px 80px",
-                text: "Done",
-                bgc: "#000",
-                color: "#fff",
-                border_rad: "40px",
-                font_size: "0.9vmax",
+            <div
+              onClick={() => {
+                if (userName.length === 0 || userName.length < 4) {
+                  toast(
+                    "Please enter a username of length atleast greator than 4 alphabets."
+                  );
+                } else if (password.length == 0) {
+                  toast("Please enter a password!");
+                } else if (confirmPassword.length == 0) {
+                  toast("Please fill out the confirm password field!");
+                } else if (password !== confirmPassword) {
+                  toast("The password and confirm password doesn't match!");
+                } else {
+                  createUser();
+                }
               }}
-            />
+              className=""
+            >
+              <Btn
+                data={{
+                  padding: "11px 80px",
+                  text: "Done",
+                  bgc: "#000",
+                  color: "#fff",
+                  border_rad: "40px",
+                  font_size: "0.9vmax",
+                }}
+              />
+            </div>
           </div>
         ) : (
           <div className={`${style.cen_box}`}>

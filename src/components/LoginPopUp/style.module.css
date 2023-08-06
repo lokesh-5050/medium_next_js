@@ -128,7 +128,7 @@ height: 100%;
         transition: all cubic-bezier(0.19, 1, 0.22, 1) 2s;    
 }
 .email_sent>h1{
-    padding-top: 10vh;
+    padding-top: 6vh;
     font-size: 2vmax;
 
 }
@@ -172,7 +172,7 @@ height: 100%;
     text-align: center;
 }
 .password_fields{
-    padding-top: 1vh;
+
     display: flex;
     flex-direction: column;
     gap: 20px;
