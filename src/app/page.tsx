@@ -48,6 +48,7 @@ const Home = () => {
   // function random(min: number, max: number) {
   //   return Math.floor(Math.random() * (max - min + 1)) + min;
   // }
+  // MONGO_URI=mongodb+srv://lokesh:complexitis@cluster0.zi6wonz.mongodb.net/
 
   return (
     <section className={`${style.main}`}>
