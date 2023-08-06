@@ -5,13 +5,14 @@ const Btn = (params: any) => {
   const {  text, padding, bgc, color, border_rad, font_size } =
     params.data;
 
-  console.log( text, padding, bgc, color, border_rad, font_size);
+
 
   return (
     <section>
       <div
         className={`${style.btn}`}
         style={{
+          cursor:'pointer',
           backgroundColor: bgc,
           borderRadius: border_rad,
           padding: padding,

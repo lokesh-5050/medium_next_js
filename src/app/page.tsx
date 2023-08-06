@@ -17,7 +17,7 @@ import LoggedInPosts from "@/components/Posts/page";
 const Home = () => {
   const [showLoginPopUp, setshowLoginPopUp] = useState(false);
   const [fixPositionOfOptions, setFixPositionOfOptions] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [fixLoggedInAppBar, setfixLoggedInAppBar] = useState(false)
   const mContainer = useRef(null);
   const [isDropDownOpened, setisDropDownOpened] = useState(false);
@@ -455,16 +455,6 @@ const Home = () => {
           </div>
         </div>
       )}
-
-      {/* Drop down Button starts */}
-
-      
-
-      {/* Drop down Button ends */}
-
-      {/* Main body starts here for logged in user */}
-
-      {/* Main body ends here for logged in user */}
     </section>
   );
 };

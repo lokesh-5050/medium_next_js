@@ -7,6 +7,7 @@ height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all cubic-bezier(0.19, 1, 0.22, 1) 2s;
     
 }
 .cen_box{
@@ -50,3 +51,65 @@ height: 100%;
     color: gray;
     font-size: 0.9vmax;
 }
+
+/* email btn active starts */
+.email_btn_active{
+    width: 50%;
+    height: 92%;
+    background-color: #fff;
+    display: flex;
+    justify-content: start;
+    gap: 40px;
+    align-items: center;
+    flex-direction: column;
+    transition: all cubic-bezier(0.19, 1, 0.22, 1) 2s;
+}
+.email_btn_active>h1{
+    padding-top: 10vh;
+    font-size: 2vmax;
+}
+.email_btn_active>h4{
+    width: 40%;
+    margin-top: -1vh;
+    text-align: center;
+    font-size: 1.1vmax;
+    color: rgb(34, 34, 34);
+}
+.dismiss{
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    padding: 10px 20px;
+    font-size: 1.5vmax;
+}
+.text_field_box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 35%;
+    gap: 20px;
+}
+.text_field_box>h6{
+    text-align: center;
+    color: rgb(29, 29, 29);
+    font-size: 0.9vmax;
+}
+.textField{
+
+    text-align: center;
+    outline: none;
+    border-bottom: 1.4px solid black;
+}
+.back_btn{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    font-size: 0.9vmax;
+    color: #198017;
+    cursor: pointer;
+}
+
+.back_btn>img{
+    color: #198017;
+}
+/* email btn active ends */
