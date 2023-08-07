@@ -21,6 +21,9 @@ const Home = () => {
   const [fixLoggedInAppBar, setfixLoggedInAppBar] = useState(false)
   const mContainer = useRef(null);
   const [isDropDownOpened, setisDropDownOpened] = useState(false);
+  const [welcomeBack, setWelcomeBack] = useState(false);
+
+  
   const chnageOptionsPosition = () => {
     console.log(window.scrollY);
     
@@ -58,11 +61,13 @@ const Home = () => {
           setisDropDownOpened={setisDropDownOpened}
         />
       ) : (
-        <WithoutLogedInNavrBar setshowLoginPopUp={setshowLoginPopUp} />
+        <WithoutLogedInNavrBar setWelcomeBack={setWelcomeBack} setshowLoginPopUp={setshowLoginPopUp} />
       )}
       {showLoginPopUp ? (
-        <LoginPopUp setshowLoginPopUp={setshowLoginPopUp} />
+        <LoginPopUp welcomeBack={welcomeBack} setWelcomeBack={setWelcomeBack} setshowLoginPopUp={setshowLoginPopUp} />
       ) : null}
+
+        
 
 
 

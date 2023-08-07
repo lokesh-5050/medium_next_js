@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import style from './styles.module.css'
 import React,{useEffect, useState} from 'react'
-import logo from '../../../../public/next.svg'
+import logo from '../../../../public/images/main_logo.png';
 
 const WithoutLogedInNavrBar = (params) => {
     const [colorChange, setColorchange] = useState
@@ -31,9 +31,14 @@ const WithoutLogedInNavrBar = (params) => {
                     <h5>Our Story</h5>
                     <h5>Membership</h5>
                     <h5>Write</h5>
-                    <h5>Sign In</h5>
+                    <h5 style={{cursor:'pointer'}} onClick={()=>{
+                        params.setWelcomeBack(true);
+                        params.setshowLoginPopUp(true);
+                    }}>Sign In</h5>
                     {/* <div className={`${style.get_started_btn}`}> */}
-                    <div onClick={()=> params.setshowLoginPopUp(true)} className={`${colorChange ? `${style.get_started_btn_green}`:`${style.get_started_btn_black}` } `}>
+                    <div onClick={()=> {
+                        params.setWelcomeBack(false);
+                        params.setshowLoginPopUp(true)}} className={`${colorChange ? `${style.get_started_btn_green}`:`${style.get_started_btn_black}` } `}>
                         <h6>Get Started</h6>
                     </div>
 

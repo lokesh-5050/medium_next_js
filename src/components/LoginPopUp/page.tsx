@@ -39,6 +39,7 @@ const LoginPopUp = (params: any) => {
   const [showPassword, setshowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirmPassword, setshowConfirmPassword] = useState(false);
+  const [loginWithData, setLoginWithData] = useState(false);
 
   const handleOtpChange = (e: any) => {
     console.log(e);
@@ -57,17 +58,16 @@ const LoginPopUp = (params: any) => {
   };
 
   const createUser = async () => {
-    console.log('inside createUser');
-    axios.post('/api/users/signup').then((e)=>{
-      console.log("The response =>",e.data);
-      
+    console.log("inside createUser");
+    axios.post("/api/users/signup").then((e) => {
+      console.log("The response =>", e.data);
     });
     // const response = await sendRequest({routePath:'/api/users/signup',requestType:'POST',data:{
     //   "username":userName,
     //   email,
     //   password
     // }});
-    console.log('in the last line of createUser');
+    console.log("in the last line of createUser");
   };
 
   return (
@@ -343,6 +343,126 @@ const LoginPopUp = (params: any) => {
                 }}
               />
             </div>
+          </div>
+        ) : params.welcomeBack && !loginWithData ? (
+          <div className={`${style.email_btn_active} ${style.welcomeBack}`}>
+            <div
+              className={`${style.dismiss}`}
+              onClick={() => {
+                params.setshowLoginPopUp(false);
+              }}
+            >
+              <h1>X</h1>
+            </div>
+            <h1>Welcome Back.</h1>
+            <div className={`${style.sign_in_options}`}>
+              <OutlineWithIconBtn
+                data={{
+                  navigateTo: "",
+                  imgIcon: "https://img.icons8.com/color/48/google-logo.png",
+                  padding: "5px 20px",
+                  pRight: "85px",
+                  text: "Signin with google",
+                  bgc: "#fff",
+                  color: "rgb(86, 85, 85)",
+                  border_rad: "40px",
+                  font_size: "0.9vmax",
+                  border: "1px solid black",
+                  gap: "44px",
+                }}
+              />
+
+              <div
+                className="c"
+                onClick={() => {
+                  setLoginWithData(true);
+                }}
+              >
+                <OutlineWithIconBtn
+                  data={{
+                    navigateTo: "",
+                    imgIcon:
+                      "https://img.icons8.com/ios/50/circled-envelope.png",
+                    padding: "5px 20px",
+                    pRight: "85px",
+                    text: "Signin with email",
+                    bgc: "#fff",
+                    color: "rgb(86, 85, 85)",
+                    border_rad: "40px",
+                    font_size: "0.9vmax",
+                    border: "1px solid black",
+                    gap: "44px",
+                  }}
+                />
+              </div>
+            </div>
+            <h4>
+              No account? <span style={{ color: "#198917" }}>Create one</span>
+            </h4>
+            <h5>
+              Click “Sign In” to agree to Medium’s Terms of Service and
+              acknowledge that Medium’s Privacy Policy applies to you.
+            </h5>
+          </div>
+        ) : params.welcomeBack && loginWithData   ? (
+          <div className={`${style.email_btn_active} ${style.login_section}`}>
+            <div
+              className={`${style.dismiss}`}
+              onClick={() => {
+                params.setshowLoginPopUp(false);
+              }}
+            >
+              <h1>X</h1>
+            </div>
+            <h1>Sign In</h1>
+            <div className={`${style.password_fields}`}>
+              <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={`${style.password}`}
+                type={"text"}
+                placeholder="Enter username"
+              />
+              <div className={`${style.password_row1}`}>
+                <input
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  value={confirmPassword}
+                  className={`${style.password}`}
+                  type={`${showConfirmPassword ? "text" : "password"}`}
+                  placeholder="Enter password"
+                />
+                <h6
+                  onClick={() => setshowConfirmPassword(!showConfirmPassword)}
+                >
+                  {!showConfirmPassword ? (
+                    <img
+                      width="20"
+                      height="8"
+                      src="https://img.icons8.com/fluency-systems-regular/48/visible.png"
+                      alt="visible"
+                    />
+                  ) : (
+                    <img
+                      width="20"
+                      height="8"
+                      src="https://img.icons8.com/fluency-systems-filled/48/visible.png"
+                      alt="visible"
+                    />
+                  )}
+                </h6>
+              </div>
+            </div>
+            <Btn
+              data={{
+                padding: "11px 80px",
+                text: "Done",
+                bgc: "#000",
+                color: "#fff",
+                border_rad: "40px",
+                font_size: "0.9vmax",
+              }}
+            />
+            <h4>Forgot password ? <span style={{color: "#198917"}}>Click here</span> </h4>
           </div>
         ) : (
           <div className={`${style.cen_box}`}>
