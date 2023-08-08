@@ -57,11 +57,17 @@ const LoginPopUp = (params: any) => {
     }
   };
 
+  const userData = {
+    username: 'john_doe',
+    email: 'john@example.com',
+    password: 'password123'
+  };
+
   const createUser = async () => {
     console.log("inside createUser");
-    axios.post("/api/users/signup").then((e) => {
-      console.log("The response =>", e.data);
-    });
+    const response = await axios.post("/api/users/signup",JSON.stringify(userData));
+    console.log(response.data);
+    
     // const response = await sendRequest({routePath:'/api/users/signup',requestType:'POST',data:{
     //   "username":userName,
     //   email,
