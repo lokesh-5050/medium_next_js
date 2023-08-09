@@ -1,7 +1,7 @@
 // 'use-client'
 import React, { useState, useRef } from "react";
 import { sendEmail } from "@/helpers/mailer";
-import { sendRequest } from "@/helpers/helper";
+import { sendRequest,resolveErrorWithMessage } from "@/helpers/helper";
 import OutlineWithIconBtn from "../Buttons/OutlineButton/page";
 import style from "./style.module.css";
 import Btn from "../Buttons/page";
@@ -17,6 +17,7 @@ const LoginPopUp = (params: any) => {
   const [email, setEmail] = useState("");
   const [isDetailsFilled, setIsDetailsFilled] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   //user details
   const [userName, setUserName] = useState("");
@@ -57,23 +58,34 @@ const LoginPopUp = (params: any) => {
     }
   };
 
-  const userData = {
-    username: 'john_doe',
-    email: 'john@example.com',
-    password: 'password123'
-  };
-
+  
   const createUser = async () => {
-    console.log("inside createUser");
-    const response = await axios.post("/api/users/signup",JSON.stringify(userData));
-    console.log(response.data);
     
-    // const response = await sendRequest({routePath:'/api/users/signup',requestType:'POST',data:{
-    //   "username":userName,
-    //   email,
-    //   password
-    // }});
-    console.log("in the last line of createUser");
+    // const response = await axios.post("/api/users/signup",JSON.stringify(userData));
+    // console.log(`The data from the server is => ${JSON.stringify(response.data)}`);
+    setIsLoading(!true);
+    console.log("inside createUser =>",isLoading);
+    const response = await sendRequest({routePath:'/api/users/signup',requestType:'POST',data:{
+      "username":userName,
+      email,
+      password
+    }});
+    setIsLoading(!false);
+    
+    console.log("In Page.tsx =>> ",response);
+    
+    if(response.data.success === true){
+      //setting data to useState and all
+    }else{
+      console.log(resolveErrorWithMessage({data:response.data}));
+      
+      toast(`${resolveErrorWithMessage({data:response.data})}`);
+    }
+
+
+
+
+
   };
 
   return (
@@ -470,7 +482,9 @@ const LoginPopUp = (params: any) => {
             />
             <h4>Forgot password ? <span style={{color: "#198917"}}>Click here</span> </h4>
           </div>
-        ) : (
+        ) : isLoading ? <div className={`${style.email_btn_active}`}>
+          r
+        </div> : (
           <div className={`${style.cen_box}`}>
             <div className={`${style.close}`}>
               <h1

@@ -3,6 +3,7 @@ import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import { sendEmail } from "@/helpers/mailer";
+import { log } from "console";
 
 
 connect();
@@ -16,17 +17,15 @@ connect();
         const {username, email, password} = reqBody
 
         console.log(reqBody);
-        // return NextResponse.json({
-        //     message:"ok",
-        //     success:true,
-        //     data:reqBody
-        // });
+        
+        
 
         //check if user already exists
         const user = await User.findOne({email})
-
+        
         if(user){
-            return NextResponse.json({error: "User already exists"}, {status: 400});
+            console.log(`${user} userExists`);
+            return NextResponse.json({message: "User with this email already exists.",success:false},{status: 400});
         }
 
         //hash password
@@ -40,16 +39,18 @@ connect();
         })
 
         const savedUser = await newUser.save()
-        console.log(savedUser);
+        console.log(`Saved User ${savedUser}`);
 
         //send verification email
 
-        await sendEmail({email, emailType: "VERIFY", userId: savedUser._id})
+        await sendEmail({email, emailType: "Send_Otp", userId: savedUser._id})
 
         return NextResponse.json({
             message: "User created successfully",
             success: true,
-            savedUser
+            body:savedUser
+        },{
+            status:200
         })
         
     } catch (error: any) {

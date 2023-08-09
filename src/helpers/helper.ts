@@ -3,13 +3,14 @@ import { toast } from "react-toastify";
 
 module.exports = {
   sendRequest: async ({ routePath, data, requestType }: any) => {
-    console.log("----------");
+    var response;
+
+    try {
+      console.log("----------");
     console.log(
       `API =>> ${routePath} & Type =>> ${requestType}, With PayLoad =>> ${JSON.stringify(data)}`
     );
     console.log("----------");
-
-    var response;
 
     switch (requestType) {
       case "POST":
@@ -31,32 +32,31 @@ module.exports = {
     }
 
     console.log(
-      `Response of API => ${routePath} & Type =>> ${requestType} is =>>>> ${response!.json()}`
+      `Response of API => ${routePath} & Type =>> ${requestType} is =>>>> ${JSON.stringify(response?.data)}`
     );
 
-    switch (response?.status) {
+    switch (response!.status) {
       case 200:
         return response;
         break;
-
       case 202:
         return response;
         break;
-
-      case 404:
-        return toast("Not Found!");
-        break;
-      case 400:
-        return toast("Bad Request!");
-        break;
-      case 500:
-        return toast("Internal Server Error");
-        break;
-
       default:
+        return response;
         break;
     }
+    } catch (error:any) {
+      console.log('In error section => ',error);
+      
+      return error.response;
 
-    return response;
+    }
+    
   },
+
+  resolveErrorWithMessage: ({data}:any)=>{
+    return data.message;
+  }
+
 };
