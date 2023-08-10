@@ -1,7 +1,7 @@
 // 'use-client'
 import React, { useState, useRef } from "react";
 import { sendEmail } from "@/helpers/mailer";
-import { sendRequest,resolveErrorWithMessage } from "@/helpers/helper";
+import { sendRequest, resolveErrorWithMessage } from "@/helpers/helper";
 import OutlineWithIconBtn from "../Buttons/OutlineButton/page";
 import style from "./style.module.css";
 import Btn from "../Buttons/page";
@@ -9,7 +9,8 @@ import { OtpInput } from "reactjs-otp-input";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import axios from "axios";
-
+import { Suspense } from "react";
+import Loading from "./loading";
 const LoginPopUp = (params: any) => {
   console.log("The data is ", params);
   const [isEmailBtnActive, setisEmailBtnActive] = useState(false);
@@ -58,34 +59,40 @@ const LoginPopUp = (params: any) => {
     }
   };
 
-  
+  const validateOtp = async ()=>{
+    
+  }
+
   const createUser = async () => {
-    
-    // const response = await axios.post("/api/users/signup",JSON.stringify(userData));
-    // console.log(`The data from the server is => ${JSON.stringify(response.data)}`);
-    setIsLoading(!true);
-    console.log("inside createUser =>",isLoading);
-    const response = await sendRequest({routePath:'/api/users/signup',requestType:'POST',data:{
-      "username":userName,
-      email,
-      password
-    }});
-    setIsLoading(!false);
-    
-    console.log("In Page.tsx =>> ",response);
-    
-    if(response.data.success === true){
-      //setting data to useState and all
-    }else{
-      console.log(resolveErrorWithMessage({data:response.data}));
-      
-      toast(`${resolveErrorWithMessage({data:response.data})}`);
+    try {
+      setIsLoading(true);
+
+      console.log("inside createUser =>", isLoading);
+      const response = await sendRequest({
+        routePath: "/api/users/signup",
+        requestType: "POST",
+        data: {
+          username: userName,
+          email,
+          password,
+        },
+      });
+
+      console.log("In Page.tsx =>> ", response);
+
+      if (response.data.success === true&&response.status === 200) {
+        //setting data to useState and all
+        setIsDetailsFilled(true);
+      } else {
+        console.log(resolveErrorWithMessage({ data: response.data }));
+
+        toast(`${resolveErrorWithMessage({ data: response.data })}`);
+      }
+    } catch (error) {
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
-
-
-
-
-
   };
 
   return (
@@ -252,7 +259,8 @@ const LoginPopUp = (params: any) => {
         ) : isEmailBtnActive &&
           isEmailSent &&
           !otpVerified &&
-          !isDetailsFilled ? (
+          !isDetailsFilled &&
+          !isLoading ? (
           <div className={`${style.email_sent} ${style.new_password_set}`}>
             <div
               className={`${style.dismiss}`}
@@ -333,7 +341,7 @@ const LoginPopUp = (params: any) => {
               </div>
             </div>
             <div
-              onClick={() => {
+              onClick={async () => {
                 if (userName.length === 0 || userName.length < 4) {
                   toast(
                     "Please enter a username of length atleast greator than 4 alphabets."
@@ -422,7 +430,7 @@ const LoginPopUp = (params: any) => {
               acknowledge that Medium’s Privacy Policy applies to you.
             </h5>
           </div>
-        ) : params.welcomeBack && loginWithData   ? (
+        ) : params.welcomeBack && loginWithData ? (
           <div className={`${style.email_btn_active} ${style.login_section}`}>
             <div
               className={`${style.dismiss}`}
@@ -480,11 +488,19 @@ const LoginPopUp = (params: any) => {
                 font_size: "0.9vmax",
               }}
             />
-            <h4>Forgot password ? <span style={{color: "#198917"}}>Click here</span> </h4>
+            <h4>
+              Forgot password ?{" "}
+              <span style={{ color: "#198917" }}>Click here</span>{" "}
+            </h4>
           </div>
-        ) : isLoading ? <div className={`${style.email_btn_active}`}>
-          r
-        </div> : (
+        ) : isLoading ? (
+          <div className={`${style.email_btn_active}`}>
+            <div className={`${style.loader_in_center}`}>
+
+            <Loading/>
+            </div>
+          </div>
+        ) : (
           <div className={`${style.cen_box}`}>
             <div className={`${style.close}`}>
               <h1
