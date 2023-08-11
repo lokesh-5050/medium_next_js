@@ -5,7 +5,7 @@ connect();
 
 export async function POST(request: NextRequest) {
   const reqBody = await request.json();
-  const { otp } = reqBody;
+  const { otp ,  } = reqBody;
 
   
 

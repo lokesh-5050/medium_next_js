@@ -11,8 +11,12 @@ import "react-toastify/dist/ReactToastify.min.css";
 import axios from "axios";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { useRouter } from "next/navigation";
+
+
 const LoginPopUp = (params: any) => {
-  console.log("The data is ", params);
+
+  const router = useRouter();
   const [isEmailBtnActive, setisEmailBtnActive] = useState(false);
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [email, setEmail] = useState("");
@@ -59,9 +63,65 @@ const LoginPopUp = (params: any) => {
     }
   };
 
-  const validateOtp = async ()=>{
+  const validateOtp = async () => {
+    try {
+      setIsLoading(true);
+      const response = await sendRequest({
+        routePath: "/api/users/validateOtp",
+        requestType: "POST",
+        data: {
+          otp: `${otp1}${otp2}${otp3}${otp4}${otp5}${otp6}`,
+        },
+      });
+    } catch (error) {
+      setIsLoading(true);
+    } finally {
+      setIsLoading(true);
+    }
+  };
+
+  const handleLoginUser = async () => {
     
-  }
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if (!emailRegex.test(email)) {
+      toast("Enter a valid email");
+    }else if(confirmPassword.length <4){
+      toast('Password length must be greator than 4');
+    }else{
+      try {
+        setIsLoading(true);
+        const response = await sendRequest({
+          routePath: "/api/users/login",
+          requestType: "POST",
+          data: {
+            email: email,
+            password: confirmPassword,
+          },
+        });
+
+        console.log(response);
+        
+  
+        if (response.status === 200) {
+          params.setshowLoginPopUp(false);
+          
+          toast(response.data.data.message);
+          router.refresh();
+
+        }else {
+          console.log(resolveErrorWithMessage({ data: response.data }));
+  
+          toast(`${resolveErrorWithMessage({ data: response.data })}`);
+        }
+      } catch (error: any) {
+        setIsLoading(false);
+        toast(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    
+  };
 
   const createUser = async () => {
     try {
@@ -80,7 +140,7 @@ const LoginPopUp = (params: any) => {
 
       console.log("In Page.tsx =>> ", response);
 
-      if (response.data.success === true&&response.status === 200) {
+      if (response.data.success === true && response.status === 200) {
         //setting data to useState and all
         setIsDetailsFilled(true);
       } else {
@@ -443,11 +503,11 @@ const LoginPopUp = (params: any) => {
             <h1>Sign In</h1>
             <div className={`${style.password_fields}`}>
               <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className={`${style.password}`}
                 type={"text"}
-                placeholder="Enter username"
+                placeholder="Enter email"
               />
               <div className={`${style.password_row1}`}>
                 <input
@@ -478,16 +538,18 @@ const LoginPopUp = (params: any) => {
                 </h6>
               </div>
             </div>
-            <Btn
-              data={{
-                padding: "11px 80px",
-                text: "Done",
-                bgc: "#000",
-                color: "#fff",
-                border_rad: "40px",
-                font_size: "0.9vmax",
-              }}
-            />
+            <div className="" onClick={() => handleLoginUser()}>
+              <Btn
+                data={{
+                  padding: "11px 80px",
+                  text: "Done",
+                  bgc: "#000",
+                  color: "#fff",
+                  border_rad: "40px",
+                  font_size: "0.9vmax",
+                }}
+              />
+            </div>
             <h4>
               Forgot password ?{" "}
               <span style={{ color: "#198917" }}>Click here</span>{" "}
@@ -496,8 +558,7 @@ const LoginPopUp = (params: any) => {
         ) : isLoading ? (
           <div className={`${style.email_btn_active}`}>
             <div className={`${style.loader_in_center}`}>
-
-            <Loading/>
+              <Loading />
             </div>
           </div>
         ) : (

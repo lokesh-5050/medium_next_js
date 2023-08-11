@@ -13,6 +13,10 @@ import OutlineWithIconBtn from "@/components/Buttons/OutlineButton/page";
 import LoginPopUp from "@/components/LoginPopUp/page";
 import LoggedInNavBar from "@/components/NavBars/LoggedInNavBar/page";
 import LoggedInPosts from "@/components/Posts/page";
+import cookie from 'js-cookie'
+import { cookies } from "next/dist/client/components/headers";
+
+
 
 const Home = () => {
   const [showLoginPopUp, setshowLoginPopUp] = useState(false);
@@ -37,7 +41,8 @@ const Home = () => {
       setFixPositionOfOptions(false);
     }
   };
-  useEffect(() => {
+
+  const handleDropDown = ()=>{
     window.addEventListener("click", (e) => {
       if (e.target.className === "dropDown") {
         console.log("Target is this");
@@ -46,7 +51,23 @@ const Home = () => {
       }
     });
     window.addEventListener("scroll", chnageOptionsPosition);
-  }, []);
+  }
+
+  const handleAuthOnInitialLoad = async({token}:any)=>{
+    console.log('token is => ',token);
+    
+    if(token != null && token != ''){
+      setIsLoggedIn(true);
+    }
+  }
+
+
+  useEffect(() => {
+    handleDropDown();
+    console.log(cookie.get('token'));
+    
+    handleAuthOnInitialLoad({token:cookie.get('token')});
+  }, [isLoggedIn]);
 
   // function random(min: number, max: number) {
   //   return Math.floor(Math.random() * (max - min + 1)) + min;

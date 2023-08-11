@@ -17,11 +17,9 @@ connect();
         const {username, email, password} = reqBody;
 
         console.log(reqBody);
-        
-        
 
         //check if user already exists
-        const user = await User.findOne({email})
+        const user = await User.findOne({email});
         
         if(user){
             console.log(`${user} userExists`);
@@ -31,7 +29,6 @@ connect();
         //hash password
         const salt = await bcryptjs.genSalt(10)
         const hashedPassword = await bcryptjs.hash(password, salt);
-
         
         const newUser = new User({
             username,
