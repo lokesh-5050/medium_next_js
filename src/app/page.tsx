@@ -15,6 +15,7 @@ import LoggedInNavBar from "@/components/NavBars/LoggedInNavBar/page";
 import LoggedInPosts from "@/components/Posts/page";
 import cookie from 'js-cookie'
 import { cookies } from "next/dist/client/components/headers";
+import axios from "axios";
 
 
 
@@ -53,20 +54,22 @@ const Home = () => {
     window.addEventListener("scroll", chnageOptionsPosition);
   }
 
-  const handleAuthOnInitialLoad = async({token}:any)=>{
-    console.log('token is => ',token);
+  const handleAuthOnInitialLoad = async()=>{
+    axios.get('/api/users/get-token').then((e)=>{
+      console.log(e.data.isLoggedIn);
+      setIsLoggedIn(e.data.isLoggedIn);
+    });
     
-    if(token != null && token != ''){
-      setIsLoggedIn(true);
-    }
+    
   }
 
 
   useEffect(() => {
     handleDropDown();
-    console.log(cookie.get('token'));
+   
+
     
-    handleAuthOnInitialLoad({token:cookie.get('token')});
+    handleAuthOnInitialLoad();
   }, [isLoggedIn]);
 
   // function random(min: number, max: number) {
