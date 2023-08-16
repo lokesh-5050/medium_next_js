@@ -16,6 +16,8 @@ import LoggedInPosts from "@/components/Posts/page";
 import cookie from 'js-cookie'
 import { cookies } from "next/dist/client/components/headers";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { asyncLoadUser } from "./GlobalRedux/Features/user/userActions";
 
 
 
@@ -27,6 +29,8 @@ const Home = () => {
   const mContainer = useRef(null);
   const [isDropDownOpened, setisDropDownOpened] = useState(false);
   const [welcomeBack, setWelcomeBack] = useState(false);
+
+  const Dispatch = useDispatch();
 
   
   const chnageOptionsPosition = () => {
@@ -54,23 +58,22 @@ const Home = () => {
     window.addEventListener("scroll", chnageOptionsPosition);
   }
 
-  const handleAuthOnInitialLoad = async()=>{
-    axios.get('/api/users/get-token').then((e)=>{
-      console.log(e.data.isLoggedIn);
-      setIsLoggedIn(e.data.isLoggedIn);
-    });
+  // const handleAuthOnInitialLoad = async()=>{
+  //   axios.get('/api/users/get-token').then((e)=>{
+  //     console.log(e.data.isLoggedIn);
+  //     setIsLoggedIn(e.data.isLoggedIn);
+  //   });
     
     
-  }
+  // }
 
 
   useEffect(() => {
     handleDropDown();
-   
-
+    Dispatch(asyncLoadUser());
     
-    handleAuthOnInitialLoad();
-  }, [isLoggedIn]);
+
+  }, []);
 
   // function random(min: number, max: number) {
   //   return Math.floor(Math.random() * (max - min + 1)) + min;

@@ -1,5 +1,11 @@
+import User from "@/models/userModel";
 import axios from "axios";
+import { NextRequest } from "next/server";
 import { toast } from "react-toastify";
+import jwt from "jsonwebtoken";
+import { connect } from "@/config/dbConfig";
+
+connect();
 
 module.exports = {
   sendRequest: async ({ routePath, data, requestType }: any) => {
@@ -57,6 +63,25 @@ module.exports = {
 
   resolveErrorWithMessage: ({data}:any)=>{
     return data.message;
+  },
+
+  isLoggedIn : async ({req}:NextRequest) => {
+    connect();
+    try {
+      const token = req.cookies.token;
+      const { id } = jwt.verify(token, process.env.SECRET_KEY);
+      const user = await User.findById(id).exec();
+      req.user = user;
+
+    } catch (error:any) {
+      if (error.name === "JsonWebTokenError") {
+        // return res.status(401).json({ message: "can not access the resource" });
+      } else if (error.name === "TokenExpiredError") {
+        // res.status(401).json({ message: "session timeout! login again" });
+      } else {
+        // res.status(401).json(error);
+      }
+    }
   }
 
 };

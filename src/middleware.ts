@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-
+import {isLoggedIn} from '@/helpers/helper';
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 //   return NextResponse.redirect(new URL("/home", request.url));
 
+
+
   const isPublicPath = path == "/login" || path === "/" || path === '/signup';
 
   const token = request.cookies.get("token")?.value || "";
+
+  isLoggedIn({req:request});
 
   if (!isPublicPath && !token) {
     return NextResponse.redirect(new URL("/", request.nextUrl));
