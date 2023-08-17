@@ -12,9 +12,13 @@ import axios from "axios";
 import { Suspense } from "react";
 import Loading from "./loading";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { asyncSignUp } from "@/app/GlobalRedux/Features/user/userActions";
 
 
 const LoginPopUp = (params: any) => {
+
+  const Dispatch = useDispatch();
 
   const router = useRouter();
   const [isEmailBtnActive, setisEmailBtnActive] = useState(false);
@@ -124,35 +128,15 @@ const LoginPopUp = (params: any) => {
   };
 
   const createUser = async () => {
-    try {
-      setIsLoading(true);
+   
+    
+      Dispatch(asyncSignUp({
+        userName,
+        email,
+        password
+  }));
 
-      console.log("inside createUser =>", isLoading);
-      const response = await sendRequest({
-        routePath: "/api/users/signup",
-        requestType: "POST",
-        data: {
-          username: userName,
-          email,
-          password,
-        },
-      });
-
-      console.log("In Page.tsx =>> ", response);
-
-      if (response.data.success === true && response.status === 200) {
-        //setting data to useState and all
-        setIsDetailsFilled(true);
-      } else {
-        console.log(resolveErrorWithMessage({ data: response.data }));
-
-        toast(`${resolveErrorWithMessage({ data: response.data })}`);
-      }
-    } catch (error) {
-      setIsLoading(false);
-    } finally {
-      setIsLoading(false);
-    }
+      
   };
 
   return (

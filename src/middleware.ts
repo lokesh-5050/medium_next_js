@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import {isLoggedIn} from '@/helpers/helper';
+import { connect } from "./config/dbConfig";
+connect();
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
 //   return NextResponse.redirect(new URL("/home", request.url));

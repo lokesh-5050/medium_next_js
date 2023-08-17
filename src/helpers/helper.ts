@@ -4,8 +4,12 @@ import { NextRequest } from "next/server";
 import { toast } from "react-toastify";
 import jwt from "jsonwebtoken";
 import { connect } from "@/config/dbConfig";
+import { useDispatch } from "react-redux";
+import { errors } from "@/app/GlobalRedux/Features/user/userSlice";
 
 connect();
+
+const Dispatch = useDispatch();
 
 module.exports = {
   sendRequest: async ({ routePath, data, requestType }: any) => {
@@ -54,7 +58,7 @@ module.exports = {
     }
     } catch (error:any) {
       console.log('In error section => ',error);
-      
+      Dispatch(errors(error.response.data.message));
       return error.response;
 
     }
@@ -65,11 +69,15 @@ module.exports = {
     return data.message;
   },
 
-  isLoggedIn : async ({req}:NextRequest) => {
-    connect();
+  isLoggedIn : async ({req}:any) => {
+
     try {
       const token = req.cookies.token;
+      console.log('The cookie is ',token);
+      
       const { id } = jwt.verify(token, process.env.SECRET_KEY);
+      console.log('The id is ',id);
+      
       const user = await User.findById(id).exec();
       req.user = user;
 
